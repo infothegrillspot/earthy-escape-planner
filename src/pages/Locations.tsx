@@ -6,8 +6,8 @@ import Footer from "@/components/Footer";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { MapPin, Star, ArrowRight, ArrowUpDown } from "lucide-react";
-import bannerImage from "@/assets/detail-forest-1.jpg";
+import { UtensilsCrossed, Star, ArrowRight, ArrowUpDown } from "lucide-react";
+import bannerImage from "@/assets/hero-grill.jpg";
 import { locations } from "@/data/locations";
 
 type SortOption = "price-low" | "price-high" | "rating";
@@ -58,13 +58,13 @@ const Locations = () => {
         >
           <div className="text-center mb-12">
             <span className="text-[11px] uppercase tracking-wider text-muted-foreground mb-4 block">
-              Our Locations
+              Our Menu
             </span>
             <h1 className="text-2xl md:text-3xl font-light tracking-tight text-foreground mb-4">
-              All Spots
+              Everything Off The Grill
             </h1>
             <p className="text-sm text-muted-foreground font-light max-w-md mx-auto">
-              Explore all our handpicked camping locations
+              Burgers, shawarma, pizza, BBQ, loaded fries, drinks and housemade sauces
             </p>
           </div>
 
@@ -111,7 +111,7 @@ const Locations = () => {
                         {location.name}
                       </h3>
                       <div className="flex items-center gap-1 text-muted-foreground mb-4 text-xs font-light">
-                        <MapPin className="h-3 w-3" />
+                        <UtensilsCrossed className="h-3 w-3" />
                         <span>{location.location}</span>
                       </div>
                       <div className="flex flex-wrap gap-1.5 mb-5">
@@ -127,7 +127,7 @@ const Locations = () => {
                       <div className="flex items-center justify-between">
                         <div>
                           <span className="text-xl font-light text-foreground">${location.price}</span>
-                          <span className="text-muted-foreground text-xs font-light">/night</span>
+                          <span className="text-muted-foreground text-xs font-light"> starting</span>
                         </div>
                         <Button variant="ghost" size="sm" className="text-primary hover:text-primary/80 text-xs font-light">
                           View Details

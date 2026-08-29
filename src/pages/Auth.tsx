@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Tent, ArrowLeft } from "lucide-react";
+import { Flame, ArrowLeft } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -117,9 +117,9 @@ const Auth = () => {
       >
         <div className="text-center mb-10">
           <div className="flex items-center justify-center gap-2 mb-6">
-            <Tent className="h-5 w-5 text-primary" />
+            <Flame className="h-5 w-5 text-primary" />
             <span className="text-sm font-normal tracking-wide text-background">
-              Wild Haven
+              The Grill Spot
             </span>
           </div>
           <h1 className="text-2xl font-light text-background mb-2 tracking-tight">
@@ -127,7 +127,7 @@ const Auth = () => {
           </h1>
           <p className="text-xs text-background/60 font-light">
             {isLogin
-              ? "Sign in to manage your properties"
+              ? "Sign in to manage your restaurant"
               : "Register for admin access"}
           </p>
         </div>
@@ -142,7 +142,7 @@ const Auth = () => {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="admin@wildhaven.com"
+              placeholder="admin@thegrillspot.com"
               className="bg-background/10 border-background/20 text-background placeholder:text-background/30 focus-visible:ring-primary"
               required
             />
