@@ -1,7 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
-import { ArrowLeft, MapPin, Star, Calendar, ChevronLeft, ChevronRight, Quote } from "lucide-react";
-import { DateRange } from "react-day-picker";
+import { ArrowLeft, UtensilsCrossed, Star, Clock, ChevronLeft, ChevronRight, Quote } from "lucide-react";
 import { format } from "date-fns";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -15,14 +14,18 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import { toast } from "sonner";
 import { getLocationById } from "@/data/locations";
 
+const timeSlots = [
+  "12:00", "12:30", "13:00", "13:30", "14:00",
+  "17:00", "17:30", "18:00", "18:30", "19:00",
+  "19:30", "20:00", "20:30", "21:00", "21:30",
+];
+
 const LocationDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const location = id ? getLocationById(id) : null;
-  const [dateRange, setDateRange] = useState<DateRange | undefined>({
-    from: new Date(),
-    to: undefined
-  });
+  const [date, setDate] = useState<Date | undefined>(new Date());
+  const [time, setTime] = useState("");
   const [guests, setGuests] = useState("");
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   
@@ -33,7 +36,7 @@ const LocationDetail = () => {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-xl font-light mb-4">Location not found</h1>
+          <h1 className="text-xl font-light mb-4">Menu item not found</h1>
           <Button onClick={() => navigate("/")} variant="outline" size="sm" className="text-xs font-light">
             Return Home
           </Button>
@@ -46,11 +49,11 @@ const LocationDetail = () => {
   const allImages = [location.image, ...location.images];
 
   const handleBooking = () => {
-    if (!dateRange?.from || !dateRange?.to || !guests) {
-      toast.error("Please select check-in, check-out dates and number of guests");
+    if (!date || !time || !guests) {
+      toast.error("Please select a date, time, and number of guests");
       return;
     }
-    toast.success(`Booking request for ${location.name} submitted!`);
+    toast.success(`Table reserved! Get ready for ${location.name}.`);
   };
 
   const nextImage = () => {
@@ -59,12 +62,6 @@ const LocationDetail = () => {
 
   const prevImage = () => {
     setCurrentImageIndex((prev) => (prev - 1 + allImages.length) % allImages.length);
-  };
-
-  const formatDateRange = () => {
-    if (!dateRange?.from) return "Select dates";
-    if (!dateRange?.to) return format(dateRange.from, "MMM d, yyyy");
-    return `${format(dateRange.from, "MMM d")} - ${format(dateRange.to, "MMM d, yyyy")}`;
   };
 
   return (
@@ -94,7 +91,7 @@ const LocationDetail = () => {
             className="mb-8 text-[11px] uppercase tracking-wider font-normal"
           >
             <ArrowLeft className="mr-2 h-3 w-3" />
-            Back to locations
+            Back to menu
           </Button>
 
           {/* Title, Description, Rating */}
@@ -105,7 +102,7 @@ const LocationDetail = () => {
             className="mb-10"
           >
             <div className="flex items-center gap-2 text-xs text-muted-foreground mb-3">
-              <MapPin className="h-3 w-3" />
+              <UtensilsCrossed className="h-3 w-3" />
               <span className="font-light">{location.location}</span>
               <div className="flex items-center gap-1 ml-4">
                 <Star className="h-3 w-3 fill-primary text-primary" />
@@ -182,7 +179,7 @@ const LocationDetail = () => {
                 transition={{ duration: 0.6, delay: 0.3 }}
               >
                 <Card className="p-8 border border-border shadow-soft">
-                  <h2 className="text-[11px] uppercase tracking-wider font-normal mb-6">Amenities</h2>
+                  <h2 className="text-[11px] uppercase tracking-wider font-normal mb-6">Why You'll Love It</h2>
                   <div className="grid md:grid-cols-2 gap-6">
                     {location.amenities.map((amenity: any, index: number) => {
                       const Icon = amenity.icon;
@@ -210,7 +207,7 @@ const LocationDetail = () => {
                 transition={{ duration: 0.6, delay: 0.4 }}
               >
                 <Card className="p-8 border border-border shadow-soft">
-                  <h2 className="text-[11px] uppercase tracking-wider font-normal mb-6">What's Included</h2>
+                  <h2 className="text-[11px] uppercase tracking-wider font-normal mb-6">On The Menu</h2>
                   <ul className="grid md:grid-cols-2 gap-3">
                     {location.details.map((detail: string, index: number) => (
                       <li key={index} className="flex items-start gap-3 text-sm text-muted-foreground font-light">
@@ -229,7 +226,7 @@ const LocationDetail = () => {
                 transition={{ duration: 0.6, delay: 0.5 }}
               >
                 <Card className="p-8 border border-border shadow-soft">
-                  <h2 className="text-[11px] uppercase tracking-wider font-normal mb-6">Guest Reviews</h2>
+                  <h2 className="text-[11px] uppercase tracking-wider font-normal mb-6">What Diners Say</h2>
                   <Carousel
                     opts={{
                       align: "start",
@@ -285,7 +282,7 @@ const LocationDetail = () => {
                   <div className="mb-8">
                     <div className="flex items-baseline gap-2 mb-2">
                       <span className="text-2xl font-light">${location.price}</span>
-                      <span className="text-xs text-muted-foreground font-light">/ night</span>
+                      <span className="text-xs text-muted-foreground font-light">starting</span>
                     </div>
                     <div className="flex items-center gap-1 text-xs">
                       <Star className="h-3 w-3 fill-primary text-primary" />
@@ -313,25 +310,38 @@ const LocationDetail = () => {
                     </div>
 
                     <div>
+                      <Label htmlFor="detail-time" className="text-[11px] uppercase tracking-wider font-normal mb-3 block">
+                        Time
+                      </Label>
+                      <Select value={time} onValueChange={setTime}>
+                        <SelectTrigger id="detail-time" className="rounded-md text-sm font-light">
+                          <SelectValue placeholder="Select a time" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {timeSlots.map((slot) => (
+                            <SelectItem key={slot} value={slot}>
+                              {slot}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div>
                       <Label className="text-[11px] uppercase tracking-wider font-normal mb-3 block">
-                        Check-in & Check-out
+                        Date
                       </Label>
                       <CalendarComponent
-                        mode="range"
-                        selected={dateRange}
-                        onSelect={setDateRange}
+                        mode="single"
+                        selected={date}
+                        onSelect={setDate}
                         numberOfMonths={1}
                         className="rounded-md border-border text-sm pointer-events-auto"
-                        disabled={(date) => date < new Date()}
+                        disabled={(d) => d < new Date()}
                       />
-                      {dateRange?.from && (
+                      {date && (
                         <p className="text-xs text-muted-foreground font-light mt-2 text-center">
-                          {formatDateRange()}
-                          {dateRange?.to && (
-                            <span className="block">
-                              {Math.ceil((dateRange.to.getTime() - dateRange.from.getTime()) / (1000 * 60 * 60 * 24))} nights
-                            </span>
-                          )}
+                          {format(date, "EEE, MMM d, yyyy")}
                         </p>
                       )}
                     </div>
@@ -341,8 +351,8 @@ const LocationDetail = () => {
                       className="w-full bg-primary hover:bg-primary/90 text-primary-foreground rounded-md smooth-hover text-[11px] uppercase tracking-wider font-normal"
                       onClick={handleBooking}
                     >
-                      <Calendar className="mr-2 h-4 w-4" />
-                      Reserve Now
+                      <Clock className="mr-2 h-4 w-4" />
+                      Reserve a Table
                     </Button>
                   </div>
                 </Card>
