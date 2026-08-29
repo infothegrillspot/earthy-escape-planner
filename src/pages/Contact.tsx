@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { User, Mail, MessageSquare, FileText } from "lucide-react";
-import bannerImage from "@/assets/detail-meadow-1.jpg";
+import bannerImage from "@/assets/hero-grill.jpg";
 
 const Contact = () => {
   const { toast } = useToast();
@@ -80,7 +80,7 @@ const Contact = () => {
               Get in Touch
             </h1>
             <p className="text-sm text-muted-foreground font-light">
-              Have a question or want to book a stay? We'd love to hear from you.
+              Have a question, planning an event, or craving something specific? We'd love to hear from you.
             </p>
           </div>
 

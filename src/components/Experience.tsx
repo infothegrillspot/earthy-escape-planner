@@ -1,31 +1,31 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef, useState } from "react";
-import { Leaf, Wifi, Droplets, Sun } from "lucide-react";
+import { Flame, ChefHat, Clock, Leaf } from "lucide-react";
 
 const features = [
   {
-    icon: Leaf,
-    title: "100% Off-Grid",
-    description: "Completely sustainable living with solar power and composting systems",
+    icon: Flame,
+    title: "Real Charcoal Fire",
+    description: "No gas, no shortcuts — everything cooked over glowing coals for authentic smoky flavor",
     videoUrl: "https://videos.pexels.com/video-files/4460100/4460100-hd_1920_1080_30fps.mp4",
   },
   {
-    icon: Wifi,
-    title: "Digital Detox",
-    description: "No wifi, no signal - just pure connection with nature and yourself",
+    icon: ChefHat,
+    title: "Made In-House",
+    description: "Sauces, marinades, and doughs all prepared fresh in our kitchen every day",
     videoUrl: "https://videos.pexels.com/video-files/4280450/4280450-hd_1920_1080_30fps.mp4",
   },
   {
-    icon: Droplets,
-    title: "Natural Water",
-    description: "Fresh spring water and eco-friendly facilities for your comfort",
+    icon: Leaf,
+    title: "Fresh Ingredients",
+    description: "Locally sourced meat and produce, delivered daily and prepped that morning",
     videoUrl: "https://videos.pexels.com/video-files/5487781/5487781-hd_1920_1080_30fps.mp4",
   },
   {
-    icon: Sun,
-    title: "Scenic Views",
-    description: "Wake up to breathtaking sunrises in untouched wilderness",
+    icon: Clock,
+    title: "Fast & Fresh",
+    description: "From grill to table in minutes — quality food without the wait",
     videoUrl: "https://videos.pexels.com/video-files/4460098/4460098-hd_1920_1080_30fps.mp4",
   },
 ];
@@ -45,20 +45,19 @@ const Experience = () => {
           className="text-center mb-20"
         >
           <span className="text-[11px] uppercase tracking-wider text-muted-foreground mb-4 block">
-            The Experience
+            The Grill Spot Way
           </span>
           <h2 className="text-2xl md:text-3xl font-light mb-4 text-foreground tracking-tight">
-            Simplicity Meets Comfort
+            Fire Meets Flavor
           </h2>
           <p className="text-sm text-muted-foreground max-w-md mx-auto font-light">
-            Embrace simplicity without sacrificing comfort
+            Bold flavors cooked the honest way — over real fire
           </p>
         </motion.div>
 
         <div className="grid grid-cols-1 gap-6">
           {features.map((feature, index) => {
             const Icon = feature.icon;
-            const isHovered = hoveredIndex === index;
             return (
               <motion.div
                 key={index}

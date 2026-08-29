@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { MapPin, Star, ArrowRight } from "lucide-react";
+import { UtensilsCrossed, Star, ArrowRight } from "lucide-react";
 import { Card } from "./ui/card";
 import { Button } from "./ui/button";
 import { getFeaturedLocations } from "@/data/locations";
@@ -25,7 +25,7 @@ const Locations = () => {
   const renderCard = (location: ReturnType<typeof getFeaturedLocations>[number]) => (
     <Link to={`/location/${location.id}`} className="block">
       <div className="relative h-48 overflow-hidden">
-        <img src={location.image} alt={location.name} className="w-full h-full object-cover" />
+        <img src={location.image} alt={location.name} className="w-full h-full object-cover" loading="lazy" />
         <div className="absolute top-3 right-3 bg-card/95 backdrop-blur-sm px-2 py-1 rounded-md flex items-center gap-1">
           <Star className="h-3 w-3 fill-primary text-primary" />
           <span className="font-light text-xs">{location.rating}</span>
@@ -34,7 +34,7 @@ const Locations = () => {
       <div className="p-6">
         <h3 className="text-base font-normal mb-1 text-card-foreground tracking-tight">{location.name}</h3>
         <div className="flex items-center gap-1 text-muted-foreground mb-4 text-xs font-light">
-          <MapPin className="h-3 w-3" />
+          <UtensilsCrossed className="h-3 w-3" />
           <span>{location.location}</span>
         </div>
         <div className="flex flex-wrap gap-1.5 mb-5">
@@ -45,7 +45,7 @@ const Locations = () => {
         <div className="flex items-center justify-between">
           <div>
             <span className="text-xl font-light text-foreground">${location.price}</span>
-            <span className="text-muted-foreground text-xs font-light">/night</span>
+            <span className="text-muted-foreground text-xs font-light"> starting</span>
           </div>
           <Button variant="ghost" size="sm" className="text-primary hover:text-primary/80 text-xs font-light">
             View Details
@@ -66,19 +66,19 @@ const Locations = () => {
           className="text-center mb-16"
         >
           <span className="text-[11px] uppercase tracking-wider text-muted-foreground mb-4 block">
-            Our Locations
+            Our Menu
           </span>
           <h2 className="text-2xl md:text-3xl font-light mb-4 text-foreground tracking-tight">
-            Featured Spots
+            Crowd Favorites
           </h2>
           <p className="text-sm text-muted-foreground max-w-md mx-auto font-light">
-            Handpicked spots where nature's beauty meets sustainable comfort
+            The dishes our regulars can't stop ordering
           </p>
         </motion.div>
 
         {isMobile ? (
           <div className="flex flex-col gap-6 w-full overflow-hidden">
-            {featuredLocations.map((location, index) => (
+            {featuredLocations.map((location) => (
               <div key={location.id} className="w-full">
                 <Card className="overflow-hidden border border-border bg-card shadow-lg w-full">
                   {renderCard(location)}

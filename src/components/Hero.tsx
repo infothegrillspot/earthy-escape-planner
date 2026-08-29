@@ -1,16 +1,16 @@
 import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, TreePine } from "lucide-react";
-import heroImage from "@/assets/hero-camping.jpg";
-import forestImage from "@/assets/spot-forest.jpg";
-import lakeImage from "@/assets/spot-lake.jpg";
-import meadowImage from "@/assets/spot-meadow.jpg";
+import { ArrowRight, Flame } from "lucide-react";
+import heroImage from "@/assets/hero-grill.jpg";
+import burgerImage from "@/assets/menu-burger.jpg";
+import bbqImage from "@/assets/menu-bbq.jpg";
+import pizzaImage from "@/assets/menu-pizza.jpg";
 
 const slides = [
-  { image: heroImage, alt: "Off-grid camping in nature" },
-  { image: forestImage, alt: "Forest camping spot" },
-  { image: lakeImage, alt: "Lakeside retreat" },
-  { image: meadowImage, alt: "Meadow camping experience" },
+  { image: heroImage, alt: "Grill spread with burgers, shawarma and BBQ" },
+  { image: burgerImage, alt: "Smashed cheeseburger with melting cheddar" },
+  { image: bbqImage, alt: "Charcoal BBQ skewers over glowing coals" },
+  { image: pizzaImage, alt: "Wood-fired margherita pizza" },
 ];
 
 const SLIDE_DURATION = 5000;
@@ -66,14 +66,14 @@ const Hero = () => {
 
       {/* Bottom-Left Text Content */}
       <div className="absolute bottom-20 left-6 md:left-12 lg:left-16 z-10 text-white">
-        {/* Tree Icon */}
+        {/* Flame Icon */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.5 }}
           className="mb-4"
         >
-          <TreePine className="w-6 h-6 text-white stroke-[1.5]" />
+          <Flame className="w-6 h-6 text-white stroke-[1.5]" />
         </motion.div>
 
         {/* Headline */}
@@ -83,8 +83,8 @@ const Hero = () => {
           transition={{ delay: 0.3, duration: 0.6 }}
           className="text-4xl md:text-5xl lg:text-6xl font-light tracking-tight max-w-md text-left flex flex-col"
         >
-          <span>Disconnect</span>
-          <span>to Reconnect</span>
+          <span>Fired Up.</span>
+          <span>Served Fresh.</span>
         </motion.h1>
 
         {/* CTA Button */}
@@ -95,7 +95,7 @@ const Hero = () => {
           onClick={() => document.getElementById('booking')?.scrollIntoView({ behavior: 'smooth' })}
           className="mt-6 flex items-center gap-3 bg-white text-foreground px-6 py-3 rounded-full text-sm tracking-wide hover:bg-white/90 transition-colors"
         >
-          Book Now
+          Reserve a Table
           <ArrowRight className="w-4 h-4" />
         </motion.button>
       </div>

@@ -1,39 +1,39 @@
 import { motion, useScroll, useTransform } from "framer-motion";
-import { Leaf, Heart, Compass, Mountain, Users, TreePine } from "lucide-react";
+import { Flame, Heart, ChefHat, Drumstick, Users, Leaf } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import bannerImage from "@/assets/detail-lake-2.jpg";
+import bannerImage from "@/assets/grill-interior.jpg";
 
 const values = [
   {
-    icon: Leaf,
-    title: "Sustainability",
-    description: "We tread lightly on the earth, ensuring our retreats enhance rather than harm the natural environment."
+    icon: Flame,
+    title: "Real Fire",
+    description: "Everything cooked over real charcoal — because gas grills just don't taste the same."
   },
   {
     icon: Heart,
-    title: "Connection",
-    description: "Fostering deep bonds between people and the natural world through meaningful wilderness experiences."
+    title: "Made With Love",
+    description: "Every marinade, sauce, and dough is prepared by hand in our kitchen, every single day."
   },
   {
-    icon: Compass,
-    title: "Simplicity",
-    description: "Stripping away modern complexity to rediscover the joy found in life's essential elements."
+    icon: ChefHat,
+    title: "Craft First",
+    description: "Our chefs obsess over the details — from the 24-hour marinades to the perfect char."
   },
   {
-    icon: Mountain,
-    title: "Authenticity",
-    description: "Providing genuine wilderness experiences untouched by the artificial and manufactured."
+    icon: Drumstick,
+    title: "Quality Meat",
+    description: "Fresh, locally sourced, never frozen. If we wouldn't serve it to family, we won't serve it."
   },
   {
     icon: Users,
-    title: "Community",
-    description: "Building connections between like-minded individuals who share a reverence for nature."
+    title: "Community Table",
+    description: "A place where neighbors become friends over shared platters and good conversation."
   },
   {
-    icon: TreePine,
-    title: "Mindfulness",
-    description: "Encouraging presence and awareness through the calming influence of natural surroundings."
+    icon: Leaf,
+    title: "Fresh Always",
+    description: "Produce delivered daily, herbs chopped to order, and nothing that ever sees a freezer."
   }
 ];
 
@@ -49,7 +49,7 @@ const About = () => {
       <div className="relative w-full h-[50vh] overflow-hidden">
         <motion.img
           src={bannerImage}
-          alt="Serene lake surrounded by nature"
+          alt="The Grill Spot open charcoal kitchen"
           style={{ y }}
           initial={{ opacity: 0, scale: 1.1 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -74,26 +74,27 @@ const About = () => {
               
               <div className="space-y-6 text-muted-foreground font-light leading-relaxed">
                 <p>
-                  Wild Haven was born from a simple observation: in our hyper-connected world, true rest has become 
-                  increasingly rare. We watched as screens replaced sunsets, notifications drowned out birdsong, 
-                  and the constant hum of digital life left people feeling more disconnected than ever.
+                  The Grill Spot started with a simple frustration: great grilled food shouldn't require a
+                  special occasion or a reservation weeks in advance. It should be bold, honest, and served
+                  hot — the kind of food you crave on a Tuesday night.
                 </p>
                 <p>
-                  Founded in 2019, we set out to create spaces where people could step away from the noise and 
-                  rediscover what it means to be truly present. Our retreats aren't about escaping life—they're 
-                  about returning to it, in its most essential and beautiful form.
+                  Founded in 2019, we built our kitchen around one centerpiece: a charcoal grill. No gas,
+                  no shortcuts, no heat lamps. Just fire, smoke, and ingredients treated with respect.
+                  From hand-smashed burgers to spit-roasted shawarma and wood-fired pizzas, everything
+                  on our menu passes over real flames.
                 </p>
                 <p>
-                  Each of our locations has been carefully selected not just for its natural beauty, but for its 
-                  ability to facilitate genuine restoration. From ancient forests to pristine lakeshores, every 
-                  Wild Haven retreat offers a doorway back to the rhythms that sustained humanity for millennia.
+                  Today, The Grill Spot is where the neighborhood gathers — for quick lunches, family
+                  dinners, and late-night loaded fries. The fire never goes out, and neither does our
+                  obsession with getting every plate right.
                 </p>
               </div>
             </motion.div>
           </div>
         </section>
 
-        {/* Why Off-Grid Matters Section */}
+        {/* Why Fire Matters Section */}
         <section className="py-24 lg:py-32 px-6 lg:px-12 bg-secondary/30">
           <div className="max-w-4xl mx-auto">
             <motion.div
@@ -103,29 +104,26 @@ const About = () => {
               transition={{ duration: 0.6 }}
             >
               <span className="text-[11px] uppercase tracking-wider text-muted-foreground">The Why</span>
-              <h2 className="text-2xl md:text-3xl font-light tracking-tight mt-2 mb-8">Why Off-Grid Retreats Matter</h2>
+              <h2 className="text-2xl md:text-3xl font-light tracking-tight mt-2 mb-8">Why We Cook Over Fire</h2>
               
               <div className="space-y-6 text-muted-foreground font-light leading-relaxed">
                 <p>
-                  The average person now spends over seven hours a day looking at screens. Our nervous systems, 
-                  evolved over millions of years in natural environments, are under constant assault from 
-                  artificial stimuli. The result? Epidemic levels of anxiety, burnout, and a pervasive sense 
-                  of disconnection.
+                  Charcoal grilling isn't a gimmick — it's chemistry. When fat drips onto glowing coals,
+                  it vaporizes and rises back up, coating the food in compounds that gas flames simply
+                  can't produce. That's the smoky depth you taste in every bite.
                 </p>
                 <p>
-                  Off-grid retreats offer something profound: the opportunity to reset. When we remove ourselves 
-                  from the digital matrix, remarkable things happen. Stress hormones drop. Sleep improves. 
-                  Creativity returns. We begin to hear our own thoughts again.
+                  Fire also demands attention. It can't be set to a number and forgotten. Our grill chefs
+                  read the coals, move the food, and adjust by hand — the way cooking was done for
+                  thousands of years before convenience took over.
                 </p>
                 <p>
-                  But it's not just about what we remove—it's about what we rediscover. The crackle of a fire. 
-                  The weight of silence. The slow unfurling of time when it's no longer sliced into notifications 
-                  and deadlines. These aren't luxuries; they're necessities that modern life has convinced us 
-                  we can live without.
+                  But it's not just about flavor — it's about honesty. An open grill means you can see
+                  exactly how your food is made. Nothing hidden, nothing artificial. Just fire, smoke,
+                  and skill.
                 </p>
                 <p>
-                  At Wild Haven, we believe that reconnecting with nature isn't an escape from reality—it's a 
-                  return to it. And in that return, we find not just rest, but renewal.
+                  At The Grill Spot, we believe fast food can be real food. And real food deserves real fire.
                 </p>
               </div>
             </motion.div>
