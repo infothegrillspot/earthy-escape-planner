@@ -2,7 +2,6 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
-import { DateRange } from "react-day-picker";
 import { format } from "date-fns";
 import { Button } from "./ui/button";
 import { Card } from "./ui/card";
@@ -11,8 +10,7 @@ import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { toast } from "sonner";
-import { CalendarDays, Users, MapPin, ArrowRight, ArrowLeft, CheckCircle, User, Phone, Mail, MapPinned } from "lucide-react";
-import { locations } from "@/data/locations";
+import { CalendarDays, Users, ArrowRight, ArrowLeft, CheckCircle, User, Phone, Mail, MapPinned, Clock } from "lucide-react";
 
 const slideVariants = {
   enter: (direction: number) => ({
@@ -29,6 +27,12 @@ const slideVariants = {
   })
 };
 
+const timeSlots = [
+  "12:00", "12:30", "13:00", "13:30", "14:00",
+  "17:00", "17:30", "18:00", "18:30", "19:00",
+  "19:30", "20:00", "20:30", "21:00", "21:30",
+];
+
 const Booking = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.2 });
@@ -37,12 +41,9 @@ const Booking = () => {
   const [step, setStep] = useState(1);
   const [direction, setDirection] = useState(0);
   
-  // Step 1 fields - changed to date range
-  const [dateRange, setDateRange] = useState<DateRange | undefined>({
-    from: new Date(),
-    to: undefined
-  });
-  const [location, setLocation] = useState("");
+  // Step 1 fields
+  const [date, setDate] = useState<Date | undefined>(new Date());
+  const [time, setTime] = useState("");
   const [guests, setGuests] = useState("");
   
   // Step 2 fields
@@ -52,8 +53,8 @@ const Booking = () => {
   const [postcode, setPostcode] = useState("");
 
   const handleStep1Continue = () => {
-    if (!dateRange?.from || !dateRange?.to || !location || !guests) {
-      toast.error("Please fill in all fields including check-in and check-out dates");
+    if (!date || !time || !guests) {
+      toast.error("Please select a date, time, and number of guests");
       return;
     }
     setDirection(1);
@@ -84,24 +85,13 @@ const Booking = () => {
   const handleReset = () => {
     setDirection(-1);
     setStep(1);
-    setDateRange({ from: new Date(), to: undefined });
-    setLocation("");
+    setDate(new Date());
+    setTime("");
     setGuests("");
     setName("");
     setPhone("");
     setEmail("");
     setPostcode("");
-  };
-
-  const getLocationLabel = (value: string) => {
-    const loc = locations.find(l => l.id === value);
-    return loc?.name || value;
-  };
-
-  const formatDateRange = () => {
-    if (!dateRange?.from) return "";
-    if (!dateRange?.to) return format(dateRange.from, "MMM d, yyyy");
-    return `${format(dateRange.from, "MMM d")} - ${format(dateRange.to, "MMM d, yyyy")}`;
   };
 
   return (
@@ -117,10 +107,10 @@ const Booking = () => {
             Reservations
           </span>
           <h2 className="text-2xl md:text-3xl font-light mb-4 text-foreground tracking-tight">
-            Book Your Escape
+            Reserve Your Table
           </h2>
           <p className="text-sm text-muted-foreground max-w-md mx-auto font-light">
-            Choose your dates and let nature work its magic
+            Grab your spot by the grill — walk-ins welcome too
           </p>
         </motion.div>
 
@@ -157,18 +147,18 @@ const Booking = () => {
                   <div className="grid md:grid-cols-2 gap-8">
                     <div className="space-y-6">
                       <div>
-                        <Label htmlFor="location" className="flex items-center gap-1.5 mb-3 text-card-foreground text-[11px] uppercase tracking-wider font-normal">
-                          <MapPin className="h-3 w-3" />
-                          Location
+                        <Label htmlFor="time" className="flex items-center gap-1.5 mb-3 text-card-foreground text-[11px] uppercase tracking-wider font-normal">
+                          <Clock className="h-3 w-3" />
+                          Time
                         </Label>
-                        <Select value={location} onValueChange={setLocation}>
-                          <SelectTrigger id="location" className="rounded-md text-sm font-light">
-                            <SelectValue placeholder="Select a location" />
+                        <Select value={time} onValueChange={setTime}>
+                          <SelectTrigger id="time" className="rounded-md text-sm font-light">
+                            <SelectValue placeholder="Select a time" />
                           </SelectTrigger>
                           <SelectContent>
-                            {locations.map((loc) => (
-                              <SelectItem key={loc.id} value={loc.id}>
-                                {loc.name}
+                            {timeSlots.map((slot) => (
+                              <SelectItem key={slot} value={slot}>
+                                {slot}
                               </SelectItem>
                             ))}
                           </SelectContent>
@@ -209,19 +199,19 @@ const Booking = () => {
                     <div>
                       <Label className="flex items-center gap-1.5 mb-3 text-card-foreground text-[11px] uppercase tracking-wider font-normal">
                         <CalendarDays className="h-3 w-3" />
-                        Check-in & Check-out
+                        Date
                       </Label>
                       <Calendar
-                        mode="range"
-                        selected={dateRange}
-                        onSelect={setDateRange}
+                        mode="single"
+                        selected={date}
+                        onSelect={setDate}
                         numberOfMonths={1}
                         className="rounded-md border-border shadow-soft text-sm pointer-events-auto"
-                        disabled={(date) => date < new Date()}
+                        disabled={(d) => d < new Date()}
                       />
-                      {dateRange?.from && dateRange?.to && (
+                      {date && (
                         <p className="text-xs text-muted-foreground font-light mt-2 text-center">
-                          {Math.ceil((dateRange.to.getTime() - dateRange.from.getTime()) / (1000 * 60 * 60 * 24))} nights selected
+                          {format(date, "EEEE, MMM d, yyyy")}
                         </p>
                       )}
                     </div>
@@ -315,7 +305,7 @@ const Booking = () => {
                         className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground rounded-md smooth-hover text-[11px] uppercase tracking-wider font-normal"
                         onClick={handleSubmit}
                       >
-                        Submit Booking
+                        Confirm Reservation
                       </Button>
                     </div>
                   </div>
@@ -342,24 +332,24 @@ const Booking = () => {
                     </motion.div>
                     
                     <div className="space-y-2">
-                      <h3 className="text-xl font-light text-foreground">Booking Confirmed</h3>
+                      <h3 className="text-xl font-light text-foreground">Table Reserved</h3>
                       <p className="text-sm text-muted-foreground font-light">
-                        Thank you, {name}! Your reservation has been submitted.
+                        Thank you, {name}! Your table has been booked.
                       </p>
                     </div>
 
                     <div className="bg-accent/30 rounded-md p-4 max-w-sm mx-auto text-left space-y-2">
-                      <p className="text-xs text-muted-foreground uppercase tracking-wider">Booking Summary</p>
+                      <p className="text-xs text-muted-foreground uppercase tracking-wider">Reservation Summary</p>
                       <div className="text-sm font-light text-foreground space-y-1">
-                        <p><span className="text-muted-foreground">Location:</span> {getLocationLabel(location)}</p>
-                        <p><span className="text-muted-foreground">Dates:</span> {formatDateRange()}</p>
+                        <p><span className="text-muted-foreground">Date:</span> {date ? format(date, "EEE, MMM d, yyyy") : ""}</p>
+                        <p><span className="text-muted-foreground">Time:</span> {time}</p>
                         <p><span className="text-muted-foreground">Guests:</span> {guests}</p>
                         <p><span className="text-muted-foreground">Email:</span> {email}</p>
                       </div>
                     </div>
 
                     <p className="text-xs text-muted-foreground font-light">
-                      A confirmation email will be sent to {email}
+                      A confirmation will be sent to {email}
                     </p>
 
                     <Button
@@ -368,7 +358,7 @@ const Booking = () => {
                       className="rounded-md smooth-hover text-[11px] uppercase tracking-wider font-normal mt-4"
                       onClick={handleReset}
                     >
-                      Book Another Stay
+                      Book Another Table
                     </Button>
                   </div>
                 </motion.div>
